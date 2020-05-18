@@ -1,6 +1,6 @@
 {
   "name": "value-from-record",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "get value of record with first match key",
   "homepage": "https://github.com/bluelovers/get-from-record#readme",
   "bugs": {
@@ -32,7 +32,6 @@
     "tsc:default": "tsc -p tsconfig.json",
     "tsc:esm": "tsc -p tsconfig.esm.json"
   },
-  "dependencies": {},
   "devDependencies": {
     "@bluelovers/tsconfig": "^1.0.19",
     "@types/jest": "^25.2.2",
