@@ -8,6 +8,8 @@ export interface IOptions
 	handleKey?(key: string): string;
 
 	reverse?: boolean,
+
+	allowUndefinedRecord?: boolean,
 }
 
 /**
@@ -17,6 +19,11 @@ export function keyFromRecord<D extends Record<any, any>, K extends keyof D | st
 	? K
 	: keyof D
 {
+	if (options?.allowUndefinedRecord && typeof record === 'undefined')
+	{
+		return;
+	}
+
 	if (typeof record[key] === 'undefined')
 	{
 		if (typeof key === 'string')
@@ -59,6 +66,11 @@ export function valueFromRecord<V = never, D extends Record<any, any> = Record<a
 	options?: IOptions,
 ): V extends never ? D[K extends keyof D ? K : keyof D] : V
 {
+	if (options?.allowUndefinedRecord && typeof record === 'undefined')
+	{
+		return;
+	}
+
 	return record[keyFromRecord(key, record, options)]
 }
 

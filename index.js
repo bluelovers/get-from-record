@@ -10,6 +10,9 @@ function defaultHandler(key) {
  */
 function keyFromRecord(key, record, options) {
     var _a;
+    if ((options === null || options === void 0 ? void 0 : options.allowUndefinedRecord) && typeof record === 'undefined') {
+        return;
+    }
     if (typeof record[key] === 'undefined') {
         if (typeof key === 'string') {
             options = options !== null && options !== void 0 ? options : {};
@@ -39,6 +42,9 @@ exports.keyFromRecord = keyFromRecord;
  * get value of record with first match key
  */
 function valueFromRecord(key, record, options) {
+    if ((options === null || options === void 0 ? void 0 : options.allowUndefinedRecord) && typeof record === 'undefined') {
+        return;
+    }
     return record[keyFromRecord(key, record, options)];
 }
 exports.valueFromRecord = valueFromRecord;

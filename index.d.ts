@@ -1,6 +1,7 @@
 export interface IOptions {
     handleKey?(key: string): string;
     reverse?: boolean;
+    allowUndefinedRecord?: boolean;
 }
 /**
  * get first match key of record
