@@ -1,20 +1,25 @@
 "use strict";
-/**
- * Created by user on 2020/5/18.
- */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFromRecord = exports.keyFromRecord = void 0;
+exports.valueFromRecord = exports.keyFromRecord = void 0;
 function defaultHandler(key) {
     var _a;
     return (_a = key === null || key === void 0 ? void 0 : key.toLowerCase) === null || _a === void 0 ? void 0 : _a.call(key);
 }
+/**
+ * get first match key of record
+ */
 function keyFromRecord(key, record, options) {
+    var _a;
     if (typeof record[key] === 'undefined') {
         if (typeof key === 'string') {
-            const { handleKey = defaultHandler } = options;
-            const keys = Object.keys(record);
+            options = options !== null && options !== void 0 ? options : {};
+            const handleKey = (_a = options.handleKey) !== null && _a !== void 0 ? _a : defaultHandler;
+            let keys = Object.keys(record);
             // @ts-ignore
             key = key.toLowerCase();
+            if (options.reverse) {
+                keys = keys.reverse();
+            }
             for (const _key of keys) {
                 // @ts-ignore
                 if (handleKey(_key) === key) {
@@ -30,9 +35,12 @@ function keyFromRecord(key, record, options) {
     }
 }
 exports.keyFromRecord = keyFromRecord;
-function getFromRecord(key, record, options) {
+/**
+ * get value of record with first match key
+ */
+function valueFromRecord(key, record, options) {
     return record[keyFromRecord(key, record, options)];
 }
-exports.getFromRecord = getFromRecord;
-exports.default = getFromRecord;
+exports.valueFromRecord = valueFromRecord;
+exports.default = valueFromRecord;
 //# sourceMappingURL=index.js.map

@@ -1,14 +1,25 @@
 {
-  "name": "get-from-record",
+  "name": "value-from-record",
   "version": "1.0.0",
-  "description": "",
+  "description": "get value of record with first match key",
+  "homepage": "https://github.com/bluelovers/get-from-record#readme",
+  "bugs": {
+    "url": "https://github.com/bluelovers/get-from-record/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluelovers/get-from-record.git"
+  },
   "license": "ISC",
   "author": "bluelovers",
   "main": "index.js",
+  "workspaces": [
+    "."
+  ],
   "scripts": {
     "coverage": "npx nyc yarn run test",
     "lint": "npx eslint **/*.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "yarn run test:jest",
     "test:jest": "jest --coverage",
     "test:mocha": "npx mocha --require ts-node/register \"!(node_modules)/**/*.{test,spec}.{ts,tsx}\"",
     "npm:publish": "npm publish",
@@ -21,8 +32,12 @@
     "tsc:default": "tsc -p tsconfig.json",
     "tsc:esm": "tsc -p tsconfig.esm.json"
   },
+  "dependencies": {},
   "devDependencies": {
     "@bluelovers/tsconfig": "^1.0.19",
-    "@types/node": "*"
+    "@types/jest": "^25.2.2",
+    "@types/node": "*",
+    "jest": "^26.0.1",
+    "ts-jest": "^26.0.0"
   }
 }
