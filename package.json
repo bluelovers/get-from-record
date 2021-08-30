@@ -1,6 +1,6 @@
 {
   "name": "value-from-record",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "get value of record with first match key",
   "homepage": "https://github.com/bluelovers/get-from-record#readme",
   "bugs": {
@@ -13,30 +13,39 @@
   "license": "ISC",
   "author": "bluelovers",
   "main": "index.js",
-  "workspaces": [
-    "."
-  ],
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "coverage": "npx nyc yarn run test",
-    "lint": "npx eslint **/*.ts",
+    "coverage": "yarn run test -- --coverage",
     "test": "yarn run test:jest",
     "test:jest": "jest --coverage",
-    "test:mocha": "npx mocha --require ts-node/register \"!(node_modules)/**/*.{test,spec}.{ts,tsx}\"",
     "npm:publish": "npm publish",
-    "npm:publish:lerna": "lerna publish --yes",
-    "prepublish:lockfile": "npx sync-lockfile .",
-    "prepublishOnly_": "yarn run ncu && yarn run sort-package-json && yarn run test",
-    "postpublish_": "git commit -m \"chore(release): publish\" .",
-    "ncu": "npx yarn-tool ncu -u",
-    "sort-package-json": "npx yarn-tool sort",
+    "npm:publish:bump": "yarn run version:bump && npm publish",
+    "preversion": "yarn run test",
+    "version:bump": "yarn-tool version",
+    "prepublishOnly": "yarn run preversion",
+    "prepublishOnly:update": "yarn run ncu && yarn run sort-package-json",
+    "postpublish": "yarn run postpublish:changelog && yarn run postpublish:git:commit && yarn run postpublish:git:tag && yarn run postpublish:git:push",
+    "postpublish:changelog": "ynpx --quiet @yarn-tool/changelog && git add ./CHANGELOG.md",
+    "postpublish:git:commit": "git commit -m \"chore(release): publish\" . & echo postpublish:git:commit",
+    "postpublish:git:push": "git push --follow-tags",
+    "postpublish:git:tag": "ynpx --quiet @yarn-tool/tag",
+    "ncu": "yarn-tool ncu -u",
+    "sort-package-json": "yarn-tool sort",
     "tsc:default": "tsc -p tsconfig.json",
-    "tsc:esm": "tsc -p tsconfig.esm.json"
+    "tsc:esm": "tsc -p tsconfig.esm.json",
+    "tsc:showConfig": "ynpx get-current-tsconfig -p"
+  },
+  "dependencies": {
+    "ts-type": "^1.2.39",
+    "ts-type-predicates": "^1.0.5"
   },
   "devDependencies": {
-    "@bluelovers/tsconfig": "^1.0.19",
-    "@types/jest": "^25.2.2",
+    "@bluelovers/tsconfig": "^1.0.25",
+    "@types/jest": "^27.0.1",
     "@types/node": "*",
-    "jest": "^26.0.1",
-    "ts-jest": "^26.0.0"
+    "jest": "^27.1.0",
+    "ts-jest": "^27.0.5"
   }
 }

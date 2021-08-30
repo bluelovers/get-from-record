@@ -1,31 +1,64 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.valueFromRecord = exports.keyFromRecord = void 0;
-function defaultHandler(key) {
-    var _a;
-    return (_a = key === null || key === void 0 ? void 0 : key.toLowerCase) === null || _a === void 0 ? void 0 : _a.call(key);
+exports.valueFromRecord = exports.keyFromRecord = exports.defaultGetValue = exports.defaultExistsKey = exports.defaultGetKeys = exports.defaultKeyHandler = void 0;
+const ts_type_predicates_1 = require("ts-type-predicates");
+function defaultKeyHandler(key) {
+    return key === null || key === void 0 ? void 0 : key.toLowerCase();
+}
+exports.defaultKeyHandler = defaultKeyHandler;
+function defaultGetKeys(record) {
+    if ((0, ts_type_predicates_1.typeNarrowed)(record, typeof record.keys === 'function')) {
+        return record.keys();
+    }
+    return Object.keys(record);
+}
+exports.defaultGetKeys = defaultGetKeys;
+function defaultGetValue(key, record) {
+    if ((0, ts_type_predicates_1.typeNarrowed)(record, typeof record.get === 'function')) {
+        return record.get(key);
+    }
+    return record[key];
+}
+exports.defaultGetValue = defaultGetValue;
+function defaultExistsKey(key, record) {
+    if ((0, ts_type_predicates_1.typeNarrowed)(record, typeof record.has === 'function')) {
+        return record.has(key);
+    }
+    // @ts-ignore
+    return key in record;
+}
+exports.defaultExistsKey = defaultExistsKey;
+function checkUndefinedRecord(record, options) {
+    if (typeof record === 'undefined' || record === null) {
+        if (options === null || options === void 0 ? void 0 : options.allowUndefinedRecord) {
+            return true;
+        }
+        throw new TypeError(`Invalid record`);
+    }
 }
 /**
  * get first match key of record
  */
 function keyFromRecord(key, record, options) {
-    var _a;
-    if ((options === null || options === void 0 ? void 0 : options.allowUndefinedRecord) && typeof record === 'undefined') {
+    var _a, _b, _c;
+    if (checkUndefinedRecord(record, options)) {
         return;
     }
-    if (typeof record[key] === 'undefined') {
+    options = options !== null && options !== void 0 ? options : {};
+    const existsKey = (_a = options.existsKey) !== null && _a !== void 0 ? _a : defaultExistsKey;
+    if (!existsKey(key, record)) {
         if (typeof key === 'string') {
-            options = options !== null && options !== void 0 ? options : {};
-            const handleKey = (_a = options.handleKey) !== null && _a !== void 0 ? _a : defaultHandler;
-            let keys = Object.keys(record);
-            // @ts-ignore
-            key = key.toLowerCase();
+            const getKeys = (_b = options.getKeys) !== null && _b !== void 0 ? _b : defaultGetKeys;
+            const keyHandler = (_c = options.handleKey) !== null && _c !== void 0 ? _c : defaultKeyHandler;
+            let keys = getKeys(record);
+            key = keyHandler(key);
             if (options.reverse) {
-                keys = keys.reverse();
+                // @ts-ignore
+                keys = [...keys].reverse();
             }
             for (const _key of keys) {
                 // @ts-ignore
-                if (handleKey(_key) === key) {
+                if (keyHandler(_key) === key) {
                     // @ts-ignore
                     return _key;
                 }
@@ -42,10 +75,13 @@ exports.keyFromRecord = keyFromRecord;
  * get value of record with first match key
  */
 function valueFromRecord(key, record, options) {
-    if ((options === null || options === void 0 ? void 0 : options.allowUndefinedRecord) && typeof record === 'undefined') {
+    var _a;
+    if (checkUndefinedRecord(record, options)) {
         return;
     }
-    return record[keyFromRecord(key, record, options)];
+    const getValue = (_a = options === null || options === void 0 ? void 0 : options.getValue) !== null && _a !== void 0 ? _a : defaultGetValue;
+    const _key = keyFromRecord(key, record, options);
+    return getValue(_key, record);
 }
 exports.valueFromRecord = valueFromRecord;
 exports.default = valueFromRecord;

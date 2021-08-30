@@ -1,8 +1,13 @@
-import valueFromRecord, { keyFromRecord } from '../index';
+import valueFromRecord, { IKeyOfRecordLike, IOptions, keyFromRecord } from '../index';
 
 const record = {
 	Path: 'value of Path',
 	path: 'value of path',
+} as const
+
+const record2 = {
+	path: record.path,
+	...record,
 } as const
 
 describe('keyFromRecord', () =>
@@ -36,10 +41,7 @@ describe('keyFromRecord', () =>
 
 		expect(actual).toStrictEqual(expected);
 
-		actual = keyFromRecord('PaTh', {
-			path: record.path,
-			...record,
-		});
+		actual = keyFromRecord('PaTh', record2);
 		expected = 'path';
 
 		expect(actual).toStrictEqual(expected);
@@ -57,10 +59,7 @@ describe('keyFromRecord', () =>
 
 		expect(actual).toStrictEqual(expected);
 
-		actual = keyFromRecord('PaTh', {
-			path: record.path,
-			...record,
-		}, {
+		actual = keyFromRecord('PaTh', record2, {
 			reverse: true,
 		});
 		expected = 'Path';
@@ -112,13 +111,36 @@ describe('valueFromRecord', () =>
 
 		expect(actual).toStrictEqual(expected);
 
-		actual = valueFromRecord('PaTh', {
-			path: record.path,
-			...record,
-		});
+		actual = valueFromRecord('PaTh', record2);
 		expected = record['path'];
 
 		expect(actual).toStrictEqual(expected);
 	});
 
 });
+
+describe('undefined', () =>
+{
+
+	test(`throw`, () =>
+	{
+		expect(() => keyFromRecord('PaTh', void 0)).toThrowError();
+		expect(() => valueFromRecord('PaTh', void 0)).toThrowError();
+	});
+
+	test(`options.allowUndefinedRecord`, () =>
+	{
+		let options: IOptions = {
+			allowUndefinedRecord: true
+		};
+
+		let actual = keyFromRecord('PaTh', void 0, options);
+
+		expect(actual).toBeUndefined();
+
+		actual = valueFromRecord('PaTh', void 0, options);
+
+		expect(actual).toBeUndefined();
+	});
+
+})
