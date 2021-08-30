@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/bluelovers/get-from-record/compare/value-from-record@1.0.3...value-from-record@2.0.0) (2021-08-30)
+
+
+### ✨　Features
+
+* support `Map` and more options ([1d8375e](https://github.com/bluelovers/get-from-record/commit/1d8375e99643644a90c19d54c699e24ac96acc17))
+
+
+
+
+
 ## [1.0.3](https://github.com/bluelovers/get-from-record/compare/value-from-record@1.0.2...value-from-record@1.0.3) (2020-05-19)
 
 **Note:** Version bump only for package value-from-record
