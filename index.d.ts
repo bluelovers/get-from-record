@@ -17,6 +17,7 @@ export interface IOptions {
     reverse?: boolean;
     allowUndefinedRecord?: boolean;
 }
+declare function keysOfRecord<D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>>(record: D, options?: IOptions): Iterable<K>;
 /**
  * get first match key of record
  */
@@ -25,5 +26,5 @@ declare function keyFromRecord<D extends IRecordLike<any, any> = IRecordLike<any
  * get value of record with first match key
  */
 declare function valueFromRecord<V = never, D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>>(key: K, record: D, options?: IOptions): V extends never ? D[IExtractKeyOfRecordLike<D, K>] : V;
-export { keyFromRecord, valueFromRecord };
+export { keysOfRecord, keyFromRecord, valueFromRecord };
 export default valueFromRecord;

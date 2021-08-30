@@ -1,4 +1,4 @@
-import valueFromRecord, { IKeyOfRecordLike, IOptions, keyFromRecord } from '../index';
+import valueFromRecord, { IKeyOfRecordLike, IOptions, keyFromRecord, keysOfRecord } from '../index';
 
 const record = {
 	Path: 'value of Path',
@@ -131,7 +131,7 @@ describe('undefined', () =>
 	test(`options.allowUndefinedRecord`, () =>
 	{
 		let options: IOptions = {
-			allowUndefinedRecord: true
+			allowUndefinedRecord: true,
 		};
 
 		let actual = keyFromRecord('PaTh', void 0, options);
@@ -144,3 +144,9 @@ describe('undefined', () =>
 	});
 
 })
+
+test(`keysOfRecord`, () =>
+{
+	expect(keysOfRecord(record)).toMatchSnapshot();
+	expect([...keysOfRecord(record)]).toMatchSnapshot();
+});

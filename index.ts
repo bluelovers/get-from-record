@@ -76,6 +76,20 @@ export interface IOptions
 	allowUndefinedRecord?: boolean,
 }
 
+function keysOfRecord<D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>>(record: D,
+	options?: IOptions,
+): Iterable<K>
+{
+	if (checkUndefinedRecord(record, options))
+	{
+		return;
+	}
+
+	const getKeys = options?.getKeys ?? defaultGetKeys;
+
+	return getKeys(record)
+}
+
 /**
  * get first match key of record
  */
@@ -146,6 +160,6 @@ function valueFromRecord<V = never, D extends IRecordLike<any, any> = IRecordLik
 	return getValue(_key, record)
 }
 
-export { keyFromRecord, valueFromRecord }
+export { keysOfRecord, keyFromRecord, valueFromRecord }
 
 export default valueFromRecord

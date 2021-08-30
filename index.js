@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.valueFromRecord = exports.keyFromRecord = exports.defaultGetValue = exports.defaultExistsKey = exports.defaultGetKeys = exports.defaultKeyHandler = void 0;
+exports.valueFromRecord = exports.keyFromRecord = exports.keysOfRecord = exports.defaultGetValue = exports.defaultExistsKey = exports.defaultGetKeys = exports.defaultKeyHandler = void 0;
 const ts_type_predicates_1 = require("ts-type-predicates");
 function defaultKeyHandler(key) {
     return key === null || key === void 0 ? void 0 : key.toLowerCase();
@@ -36,6 +36,15 @@ function checkUndefinedRecord(record, options) {
         throw new TypeError(`Invalid record`);
     }
 }
+function keysOfRecord(record, options) {
+    var _a;
+    if (checkUndefinedRecord(record, options)) {
+        return;
+    }
+    const getKeys = (_a = options === null || options === void 0 ? void 0 : options.getKeys) !== null && _a !== void 0 ? _a : defaultGetKeys;
+    return getKeys(record);
+}
+exports.keysOfRecord = keysOfRecord;
 /**
  * get first match key of record
  */

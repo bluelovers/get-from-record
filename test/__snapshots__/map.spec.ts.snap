@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`keysOfRecord 1`] = `Object {}`;
+
+exports[`keysOfRecord 2`] = `
+Array [
+  "Path",
+  "path",
+]
+`;
