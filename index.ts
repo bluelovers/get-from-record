@@ -6,10 +6,11 @@ export type IRecordLike<K extends ITSPropertyKey, V extends any> = Record<K, V> 
 export type IKeyOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<infer K, any>, 'get'> ? K : T extends
 Record<infer K, any> ? K : never;
 
-export type IExtractKeyOfRecordLike<D extends IRecordLike<any, any>, K extends IKeyOfRecordLike<D> | string> = K extends IKeyOfRecordLike<D> ? K : IKeyOfRecordLike<D>;
+export type IExtractKeyOfRecordLike<D extends IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D>> = K extends IKeyOfRecordLike<D> ? K : IKeyOfRecordLike<D>;
 
-export type IValueOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<any, infer V>, 'get'> ? V : T extends
-Record<any, infer V> ? V : never;
+export type IValueOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<any, infer V>, 'get'> ? V : T extends Record<any, infer V> ? V : never;
+
+export type IValueOfRecordLikeByKey<D extends IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D>, V extends IValueOfRecordLike<D> = IValueOfRecordLike<D>> = D extends Pick<Map<any, infer V>, 'get'> ? V : D extends Record<K, any> ? D[K] : V;
 
 export type IKeyOfRecordLikeInput<D extends IRecordLike<any, any>> = IKeyOfRecordLike<D> | string;
 
@@ -147,7 +148,7 @@ function keyFromRecord<D extends IRecordLike<any, any> = IRecordLike<any, any>, 
 function valueFromRecord<V = never, D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>>(key: K,
 	record: D,
 	options?: IOptions,
-): V extends never ? D[IExtractKeyOfRecordLike<D, K>] : V
+): [V] extends [never] ? IValueOfRecordLikeByKey<D, K> : V
 {
 	if (checkUndefinedRecord(record, options))
 	{
