@@ -238,6 +238,34 @@ function entriesOfRecord<D extends IRecordLike<any, any> = IRecordLike<any, any>
 	return getEntries(record)
 }
 
-export { keysOfRecord, keyFromRecord, valueFromRecord, setRecordValue, entriesOfRecord }
+function toRecord<K extends ITSPropertyKey, V extends any>(record: IRecordLike<K, V>): Record<K, V>
+{
+	if (typeNarrowed<Map<any, any>>(record, typeof (record as Map<any, any>).entries === 'function'))
+	{
+		record = Object.fromEntries(entriesOfRecord(record)) as Record<K, V>
+	}
+
+	return record as any
+}
+
+function toRecordMap<K extends ITSPropertyKey, V extends any>(record: IRecordLike<K, V>): Map<K, V>
+{
+	if (typeNarrowed<Record<any, any>>(record, typeof (record as Map<any, any>).entries !== 'function'))
+	{
+		record = new Map(entriesOfRecord(record))
+	}
+
+	return record as any
+}
+
+export {
+	keysOfRecord,
+	keyFromRecord,
+	valueFromRecord,
+	setRecordValue,
+	entriesOfRecord,
+	toRecord,
+	toRecordMap,
+}
 
 export default valueFromRecord

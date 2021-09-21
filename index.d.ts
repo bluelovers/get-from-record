@@ -34,5 +34,7 @@ declare function keyFromRecord<D extends IRecordLike<any, any> = IRecordLike<any
 declare function valueFromRecord<V = never, D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>>(key: K, record: D, options?: IOptions): [V] extends [never] ? IValueOfRecordLikeByKey<D, K> : V;
 declare function setRecordValue<V, D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>>(value: V, key: K, record: D, options?: IOptions): D;
 declare function entriesOfRecord<D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>, V extends IValueOfRecordLike<D> = IValueOfRecordLike<D>>(record: D, options?: IOptions): Iterable<[K, V]>;
-export { keysOfRecord, keyFromRecord, valueFromRecord, setRecordValue, entriesOfRecord };
+declare function toRecord<K extends ITSPropertyKey, V extends any>(record: IRecordLike<K, V>): Record<K, V>;
+declare function toRecordMap<K extends ITSPropertyKey, V extends any>(record: IRecordLike<K, V>): Map<K, V>;
+export { keysOfRecord, keyFromRecord, valueFromRecord, setRecordValue, entriesOfRecord, toRecord, toRecordMap, };
 export default valueFromRecord;

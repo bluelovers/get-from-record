@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.entriesOfRecord = exports.setRecordValue = exports.valueFromRecord = exports.keyFromRecord = exports.keysOfRecord = exports.defaultGetEntries = exports.checkUndefinedRecord = exports.defaultSetValue = exports.defaultGetValue = exports.defaultExistsKey = exports.defaultGetKeys = exports.defaultKeyHandler = void 0;
+exports.toRecordMap = exports.toRecord = exports.entriesOfRecord = exports.setRecordValue = exports.valueFromRecord = exports.keyFromRecord = exports.keysOfRecord = exports.defaultGetEntries = exports.checkUndefinedRecord = exports.defaultSetValue = exports.defaultGetValue = exports.defaultExistsKey = exports.defaultGetKeys = exports.defaultKeyHandler = void 0;
 const ts_type_predicates_1 = require("ts-type-predicates");
 function defaultKeyHandler(key) {
     return key === null || key === void 0 ? void 0 : key.toLowerCase();
@@ -130,5 +130,19 @@ function entriesOfRecord(record, options) {
     return getEntries(record);
 }
 exports.entriesOfRecord = entriesOfRecord;
+function toRecord(record) {
+    if ((0, ts_type_predicates_1.typeNarrowed)(record, typeof record.entries === 'function')) {
+        record = Object.fromEntries(entriesOfRecord(record));
+    }
+    return record;
+}
+exports.toRecord = toRecord;
+function toRecordMap(record) {
+    if ((0, ts_type_predicates_1.typeNarrowed)(record, typeof record.entries !== 'function')) {
+        record = new Map(entriesOfRecord(record));
+    }
+    return record;
+}
+exports.toRecordMap = toRecordMap;
 exports.default = valueFromRecord;
 //# sourceMappingURL=index.js.map

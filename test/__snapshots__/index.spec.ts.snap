@@ -39,3 +39,17 @@ Array [
   "path",
 ]
 `;
+
+exports[`toRecord 1`] = `
+Object {
+  "Path": "value of Path",
+  "path": "value of path",
+}
+`;
+
+exports[`toRecordMap 1`] = `
+Map {
+  "Path" => "value of Path",
+  "path" => "value of path",
+}
+`;

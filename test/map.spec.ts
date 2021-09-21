@@ -4,7 +4,7 @@ import valueFromRecord, {
 	IKeyOfRecordLike,
 	IValueOfRecordLike,
 	keyFromRecord,
-	keysOfRecord,
+	keysOfRecord, toRecord, toRecordMap,
 } from '../index';
 
 const record = {
@@ -138,4 +138,14 @@ test(`entriesOfRecord`, () =>
 {
 	expect(entriesOfRecord(recordMap)).toMatchSnapshot();
 	expect([...entriesOfRecord(recordMap)]).toMatchSnapshot();
+});
+
+test(`toRecord`, () =>
+{
+	expect(toRecord(recordMap)).toMatchSnapshot();
+});
+
+test(`toRecordMap`, () =>
+{
+	expect(toRecordMap(recordMap)).toMatchSnapshot();
 });
