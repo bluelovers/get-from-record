@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/bluelovers/get-from-record/compare/value-from-record@2.0.2...value-from-record@2.0.3) (2021-09-21)
+
+
+### ✨　Features
+
+* add more methods ([d86d8dc](https://github.com/bluelovers/get-from-record/commit/d86d8dcd9f51eb9e105cfdfde6777dab8d168bfb))
+
+
+
+
+
 ## [2.0.2](https://github.com/bluelovers/get-from-record/compare/value-from-record@2.0.1...value-from-record@2.0.2) (2021-08-30)
 
 
