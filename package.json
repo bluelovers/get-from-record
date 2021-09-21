@@ -38,14 +38,14 @@
     "tsc:showConfig": "ynpx get-current-tsconfig -p"
   },
   "dependencies": {
-    "ts-type": "^1.2.39",
+    "ts-type": "^1.2.40",
     "ts-type-predicates": "^1.0.5"
   },
   "devDependencies": {
     "@bluelovers/tsconfig": "^1.0.25",
-    "@types/jest": "^27.0.1",
+    "@types/jest": "^27.0.2",
     "@types/node": "*",
-    "jest": "^27.1.0",
+    "jest": "^27.2.1",
     "ts-jest": "^27.0.5"
   }
 }

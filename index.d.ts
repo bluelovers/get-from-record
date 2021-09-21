@@ -8,12 +8,17 @@ export declare type IKeyOfRecordLikeInput<D extends IRecordLike<any, any>> = IKe
 declare function defaultKeyHandler(key: any): string;
 declare function defaultGetKeys<K extends string>(record: unknown): Iterable<K>;
 declare function defaultGetValue<V>(key: any, record: unknown): V;
+declare function defaultSetValue<D extends IRecordLike<any, any>, V>(value: V, key: any, record: D): D;
+declare function defaultGetEntries<K, V>(record: unknown): Iterable<[K, V]>;
 declare function defaultExistsKey(key: any, record: unknown): boolean;
-export { defaultKeyHandler, defaultGetKeys, defaultExistsKey, defaultGetValue };
+declare function checkUndefinedRecord(record: unknown, options?: IOptions): record is void;
+export { defaultKeyHandler, defaultGetKeys, defaultExistsKey, defaultGetValue, defaultSetValue, checkUndefinedRecord, defaultGetEntries, };
 export interface IOptions {
     handleKey?(key: string): string;
     getKeys?<T extends string>(record: unknown): Iterable<T>;
     getValue?<T>(key: any, record: unknown): T;
+    setValue?<D, V>(value: V, key: any, record: D): D;
+    getEntries?<K, V>(record: unknown): Iterable<[K, V]>;
     existsKey?(key: any, record: unknown): boolean;
     reverse?: boolean;
     allowUndefinedRecord?: boolean;
@@ -27,5 +32,7 @@ declare function keyFromRecord<D extends IRecordLike<any, any> = IRecordLike<any
  * get value of record with first match key
  */
 declare function valueFromRecord<V = never, D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>>(key: K, record: D, options?: IOptions): [V] extends [never] ? IValueOfRecordLikeByKey<D, K> : V;
-export { keysOfRecord, keyFromRecord, valueFromRecord };
+declare function setRecordValue<V, D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>>(value: V, key: K, record: D, options?: IOptions): D;
+declare function entriesOfRecord<D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>, V extends IValueOfRecordLike<D> = IValueOfRecordLike<D>>(record: D, options?: IOptions): Iterable<[K, V]>;
+export { keysOfRecord, keyFromRecord, valueFromRecord, setRecordValue, entriesOfRecord };
 export default valueFromRecord;

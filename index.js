@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.valueFromRecord = exports.keyFromRecord = exports.keysOfRecord = exports.defaultGetValue = exports.defaultExistsKey = exports.defaultGetKeys = exports.defaultKeyHandler = void 0;
+exports.entriesOfRecord = exports.setRecordValue = exports.valueFromRecord = exports.keyFromRecord = exports.keysOfRecord = exports.defaultGetEntries = exports.checkUndefinedRecord = exports.defaultSetValue = exports.defaultGetValue = exports.defaultExistsKey = exports.defaultGetKeys = exports.defaultKeyHandler = void 0;
 const ts_type_predicates_1 = require("ts-type-predicates");
 function defaultKeyHandler(key) {
     return key === null || key === void 0 ? void 0 : key.toLowerCase();
@@ -20,6 +20,23 @@ function defaultGetValue(key, record) {
     return record[key];
 }
 exports.defaultGetValue = defaultGetValue;
+function defaultSetValue(value, key, record) {
+    if ((0, ts_type_predicates_1.typeNarrowed)(record, typeof record.set === 'function')) {
+        record.set(key, value);
+    }
+    else {
+        record[key] = value;
+    }
+    return record;
+}
+exports.defaultSetValue = defaultSetValue;
+function defaultGetEntries(record) {
+    if ((0, ts_type_predicates_1.typeNarrowed)(record, typeof record.entries === 'function')) {
+        return record.entries();
+    }
+    return Object.entries(record);
+}
+exports.defaultGetEntries = defaultGetEntries;
 function defaultExistsKey(key, record) {
     if ((0, ts_type_predicates_1.typeNarrowed)(record, typeof record.has === 'function')) {
         return record.has(key);
@@ -36,6 +53,7 @@ function checkUndefinedRecord(record, options) {
         throw new TypeError(`Invalid record`);
     }
 }
+exports.checkUndefinedRecord = checkUndefinedRecord;
 function keysOfRecord(record, options) {
     var _a;
     if (checkUndefinedRecord(record, options)) {
@@ -93,5 +111,24 @@ function valueFromRecord(key, record, options) {
     return getValue(_key, record);
 }
 exports.valueFromRecord = valueFromRecord;
+function setRecordValue(value, key, record, options) {
+    var _a;
+    if (checkUndefinedRecord(record, options)) {
+        return;
+    }
+    const setValue = (_a = options === null || options === void 0 ? void 0 : options.setValue) !== null && _a !== void 0 ? _a : defaultSetValue;
+    const _key = keyFromRecord(key, record, options);
+    return setValue(value, _key, record);
+}
+exports.setRecordValue = setRecordValue;
+function entriesOfRecord(record, options) {
+    var _a;
+    if (checkUndefinedRecord(record, options)) {
+        return;
+    }
+    const getEntries = (_a = options === null || options === void 0 ? void 0 : options.getEntries) !== null && _a !== void 0 ? _a : defaultGetEntries;
+    return getEntries(record);
+}
+exports.entriesOfRecord = entriesOfRecord;
 exports.default = valueFromRecord;
 //# sourceMappingURL=index.js.map

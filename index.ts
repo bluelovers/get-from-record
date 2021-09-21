@@ -3,14 +3,21 @@ import { ITSPropertyKey } from 'ts-type';
 
 export type IRecordLike<K extends ITSPropertyKey, V extends any> = Record<K, V> | Pick<Map<K, V>, 'get'>;
 
-export type IKeyOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<infer K, any>, 'get'> ? K : T extends
-Record<infer K, any> ? K : never;
+export type IKeyOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<infer K, any>, 'get'>
+	? K
+	: T extends Record<infer K, any> ? K : never;
 
-export type IExtractKeyOfRecordLike<D extends IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D>> = K extends IKeyOfRecordLike<D> ? K : IKeyOfRecordLike<D>;
+export type IExtractKeyOfRecordLike<D extends IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D>> = K extends IKeyOfRecordLike<D>
+	? K
+	: IKeyOfRecordLike<D>;
 
-export type IValueOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<any, infer V>, 'get'> ? V : T extends Record<any, infer V> ? V : never;
+export type IValueOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<any, infer V>, 'get'>
+	? V
+	: T extends Record<any, infer V> ? V : never;
 
-export type IValueOfRecordLikeByKey<D extends IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D>, V extends IValueOfRecordLike<D> = IValueOfRecordLike<D>> = D extends Pick<Map<any, infer V>, 'get'> ? V : D extends Record<K, any> ? D[K] : V;
+export type IValueOfRecordLikeByKey<D extends IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D>, V extends IValueOfRecordLike<D> = IValueOfRecordLike<D>> = D extends Pick<Map<any, infer V>, 'get'>
+	? V
+	: D extends Record<K, any> ? D[K] : V;
 
 export type IKeyOfRecordLikeInput<D extends IRecordLike<any, any>> = IKeyOfRecordLike<D> | string;
 
@@ -39,6 +46,30 @@ function defaultGetValue<V>(key: any, record: unknown): V
 	return record[key]
 }
 
+function defaultSetValue<D extends IRecordLike<any, any>, V>(value: V, key: any, record: D): D
+{
+	if (typeNarrowed<Map<any, any>>(record, typeof (record as Map<any, any>).set === 'function'))
+	{
+		record.set(key, value);
+	}
+	else
+	{
+		record[key] = value
+	}
+
+	return record
+}
+
+function defaultGetEntries<K, V>(record: unknown): Iterable<[K, V]>
+{
+	if (typeNarrowed<Map<any, any>>(record, typeof (record as Map<any, any>).entries === 'function'))
+	{
+		return record.entries();
+	}
+
+	return Object.entries(record) as any
+}
+
 function defaultExistsKey(key: any, record: unknown): boolean
 {
 	if (typeNarrowed<Map<any, any>>(record, typeof (record as Map<any, any>).has === 'function'))
@@ -63,13 +94,28 @@ function checkUndefinedRecord(record: unknown, options?: IOptions): record is vo
 	}
 }
 
-export { defaultKeyHandler, defaultGetKeys, defaultExistsKey, defaultGetValue }
+export {
+	defaultKeyHandler,
+	defaultGetKeys,
+	defaultExistsKey,
+	defaultGetValue,
+	defaultSetValue,
+	checkUndefinedRecord,
+	defaultGetEntries,
+}
 
 export interface IOptions
 {
 	handleKey?(key: string): string;
+
 	getKeys?<T extends string>(record: unknown): Iterable<T>,
+
 	getValue?<T>(key: any, record: unknown): T,
+
+	setValue?<D, V>(value: V, key: any, record: D): D,
+
+	getEntries?<K, V>(record: unknown): Iterable<[K, V]>,
+
 	existsKey?(key: any, record: unknown): boolean,
 
 	reverse?: boolean,
@@ -161,6 +207,37 @@ function valueFromRecord<V = never, D extends IRecordLike<any, any> = IRecordLik
 	return getValue(_key, record)
 }
 
-export { keysOfRecord, keyFromRecord, valueFromRecord }
+function setRecordValue<V, D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>>(value: V,
+	key: K,
+	record: D,
+	options?: IOptions,
+): D
+{
+	if (checkUndefinedRecord(record, options))
+	{
+		return;
+	}
+
+	const setValue = options?.setValue ?? defaultSetValue;
+	const _key = keyFromRecord(key, record, options);
+
+	return setValue(value, _key, record)
+}
+
+function entriesOfRecord<D extends IRecordLike<any, any> = IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D> = IKeyOfRecordLike<D>, V extends IValueOfRecordLike<D> = IValueOfRecordLike<D>>(record: D,
+	options?: IOptions,
+): Iterable<[K, V]>
+{
+	if (checkUndefinedRecord(record, options))
+	{
+		return;
+	}
+
+	const getEntries = options?.getEntries ?? defaultGetEntries;
+
+	return getEntries(record)
+}
+
+export { keysOfRecord, keyFromRecord, valueFromRecord, setRecordValue, entriesOfRecord }
 
 export default valueFromRecord

@@ -1,4 +1,4 @@
-import valueFromRecord, { IKeyOfRecordLike, IOptions, keyFromRecord, keysOfRecord } from '../index';
+import valueFromRecord, { entriesOfRecord, IKeyOfRecordLike, IOptions, keyFromRecord, keysOfRecord } from '../index';
 
 const record = {
 	Path: 'value of Path',
@@ -149,4 +149,10 @@ test(`keysOfRecord`, () =>
 {
 	expect(keysOfRecord(record)).toMatchSnapshot();
 	expect([...keysOfRecord(record)]).toMatchSnapshot();
+});
+
+test(`entriesOfRecord`, () =>
+{
+	expect(entriesOfRecord(record)).toMatchSnapshot();
+	expect([...entriesOfRecord(record)]).toMatchSnapshot();
 });

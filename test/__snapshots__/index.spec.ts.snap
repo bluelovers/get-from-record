@@ -1,5 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`entriesOfRecord 1`] = `
+Array [
+  Array [
+    "Path",
+    "value of Path",
+  ],
+  Array [
+    "path",
+    "value of path",
+  ],
+]
+`;
+
+exports[`entriesOfRecord 2`] = `
+Array [
+  Array [
+    "Path",
+    "value of Path",
+  ],
+  Array [
+    "path",
+    "value of path",
+  ],
+]
+`;
+
 exports[`keysOfRecord 1`] = `
 Array [
   "Path",
