@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/bluelovers/get-from-record/compare/value-from-record@2.0.4...value-from-record@3.0.1) (2021-12-07)
+
+
+### 🛠　Build System
+
+* update to tsdx ([f75a60d](https://github.com/bluelovers/get-from-record/commit/f75a60de94bce2222f4f05ead5050a6cc7cca5ae))
+
+
+
+
+
 ## [2.0.4](https://github.com/bluelovers/get-from-record/compare/value-from-record@2.0.3...value-from-record@2.0.4) (2021-09-21)
 
 
