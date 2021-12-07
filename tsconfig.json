@@ -1,3 +1,8 @@
 {
-  "extends": "@bluelovers/tsconfig/esm/mapfile"
+  "extends": "@bluelovers/tsconfig/tsdx/index.json",
+  "compilerOptions": {
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitAny": false
+  }
 }

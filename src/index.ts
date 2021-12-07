@@ -1,5 +1,5 @@
 import { typeNarrowed } from 'ts-type-predicates';
-import { ITSPropertyKey } from 'ts-type';
+import { ITSPropertyKey } from 'ts-type/lib/type/base';
 
 export type IRecordLike<K extends ITSPropertyKey, V extends any> = Record<K, V> | Pick<Map<K, V>, 'get'>;
 

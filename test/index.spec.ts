@@ -5,7 +5,7 @@ import valueFromRecord, {
 	keyFromRecord,
 	keysOfRecord,
 	toRecord, toRecordMap,
-} from '../index';
+} from '../src/index';
 
 const record = {
 	Path: 'value of Path',
