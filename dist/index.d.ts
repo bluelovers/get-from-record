@@ -1,11 +1,11 @@
 import { ITSPropertyKey } from 'ts-type/lib/type/base';
 
-export declare type IRecordLike<K extends ITSPropertyKey, V extends any> = Record<K, V> | Pick<Map<K, V>, "get">;
-export declare type IKeyOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<infer K, any>, "get"> ? K : T extends Record<infer K, any> ? K : never;
-export declare type IExtractKeyOfRecordLike<D extends IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D>> = K extends IKeyOfRecordLike<D> ? K : IKeyOfRecordLike<D>;
-export declare type IValueOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<any, infer V>, "get"> ? V : T extends Record<any, infer V> ? V : never;
-export declare type IValueOfRecordLikeByKey<D extends IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D>, V extends IValueOfRecordLike<D> = IValueOfRecordLike<D>> = D extends Pick<Map<any, infer V>, "get"> ? V : D extends Record<K, any> ? D[K] : V;
-export declare type IKeyOfRecordLikeInput<D extends IRecordLike<any, any>> = IKeyOfRecordLike<D> | string;
+export type IRecordLike<K extends ITSPropertyKey, V extends any> = Record<K, V> | Pick<Map<K, V>, "get">;
+export type IKeyOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<infer K, any>, "get"> ? K : T extends Record<infer K, any> ? K : never;
+export type IExtractKeyOfRecordLike<D extends IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D>> = K extends IKeyOfRecordLike<D> ? K : IKeyOfRecordLike<D>;
+export type IValueOfRecordLike<T extends IRecordLike<any, any>> = T extends Pick<Map<any, infer V>, "get"> ? V : T extends Record<any, infer V> ? V : never;
+export type IValueOfRecordLikeByKey<D extends IRecordLike<any, any>, K extends IKeyOfRecordLikeInput<D>, V extends IValueOfRecordLike<D> = IValueOfRecordLike<D>> = D extends Pick<Map<any, infer V>, "get"> ? V : D extends Record<K, any> ? D[K] : V;
+export type IKeyOfRecordLikeInput<D extends IRecordLike<any, any>> = IKeyOfRecordLike<D> | string;
 export declare function defaultKeyHandler(key: any): string;
 export declare function defaultGetKeys<K extends string>(record: unknown): Iterable<K>;
 export declare function defaultGetValue<V>(key: any, record: unknown): V;
@@ -49,6 +49,9 @@ export declare function entriesOfRecord<D extends IRecordLike<any, any> = IRecor
 ]>;
 export declare function toRecord<K extends ITSPropertyKey, V extends any>(record: IRecordLike<K, V>): Record<K, V>;
 export declare function toRecordMap<K extends ITSPropertyKey, V extends any>(record: IRecordLike<K, V>): Map<K, V>;
-export default valueFromRecord;
+
+export {
+	valueFromRecord as default,
+};
 
 export {};
