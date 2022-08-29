@@ -1,6 +1,6 @@
 {
   "name": "value-from-record",
-  "version": "3.0.1",
+  "version": "3.0.3",
   "description": "get value of record with first match key",
   "keywords": [
     "create-by-yarn-tool",

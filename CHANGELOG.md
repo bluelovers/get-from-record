@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/bluelovers/get-from-record/compare/value-from-record@3.0.1...value-from-record@3.0.3) (2022-08-29)
+
+
+
+### 🛠　Build System
+
+* update deps and build ([6a65162](https://github.com/bluelovers/get-from-record/commit/6a651620b04fc8aca838928881da2f60f9135da9))
+
+
+
 ## [3.0.1](https://github.com/bluelovers/get-from-record/compare/value-from-record@2.0.4...value-from-record@3.0.1) (2021-12-07)
 
 

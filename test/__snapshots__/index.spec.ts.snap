@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`entriesOfRecord 1`] = `
-Array [
-  Array [
+[
+  [
     "Path",
     "value of Path",
   ],
-  Array [
+  [
     "path",
     "value of path",
   ],
@@ -14,12 +14,12 @@ Array [
 `;
 
 exports[`entriesOfRecord 2`] = `
-Array [
-  Array [
+[
+  [
     "Path",
     "value of Path",
   ],
-  Array [
+  [
     "path",
     "value of path",
   ],
@@ -27,21 +27,21 @@ Array [
 `;
 
 exports[`keysOfRecord 1`] = `
-Array [
+[
   "Path",
   "path",
 ]
 `;
 
 exports[`keysOfRecord 2`] = `
-Array [
+[
   "Path",
   "path",
 ]
 `;
 
 exports[`toRecord 1`] = `
-Object {
+{
   "Path": "value of Path",
   "path": "value of path",
 }
