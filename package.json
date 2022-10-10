@@ -41,6 +41,7 @@
     "test:jest:clearCache": "jest --clearCache",
     "test:jest:snapshot": "yarn run test:jest -- -u",
     "test:snapshot": "yarn run test -- -u",
+    "test:tsd": "ynpx tsd",
     "posttest": "yarn run build",
     "install:frozenLockfile": "yarn-tool install --frozen-lockfile",
     "install:resetLockfile": "yarn-tool install --reset-lockfile",
@@ -79,14 +80,14 @@
   },
   "dependencies": {
     "ts-type": ">=2",
-    "ts-type-predicates": "^1.0.8"
+    "ts-type-predicates": "^1.0.9"
   },
   "devDependencies": {
-    "@bluelovers/tsconfig": "^1.0.30",
-    "@types/jest": "^28.1.8",
+    "@bluelovers/tsconfig": "^1.0.31",
+    "@types/jest": "^29.1.2",
     "@types/node": "*",
-    "jest": "^29.0.1",
-    "ts-jest": "^28.0.8"
+    "jest": "^29.1.2",
+    "ts-jest": "^29.0.3"
   },
   "packageManager": "yarn@^1.22.11"
 }
